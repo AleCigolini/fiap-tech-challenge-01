@@ -19,21 +19,21 @@ public class ClienteController implements ClienteApi {
     private ClienteService clienteService;
 
     @Override
-    @GetMapping("/cpf/buscar")
+    @GetMapping("/cpf")
     @ResponseStatus(HttpStatus.OK)
     public ClienteResponseDto buscarClientePorCpf(@RequestParam String cpf) {
         return clienteMapper.toResponse(clienteService.buscarClientePorCpf(cpf));
     }
 
     @Override
-    @GetMapping("/email/buscar")
+    @GetMapping("/email")
     @ResponseStatus(HttpStatus.OK)
     public ClienteResponseDto buscarClientePorEmail(@RequestParam String email) {
         return clienteMapper.toResponse(clienteService.buscarClientePorEmail(email));
     }
 
     @Override
-    @GetMapping("/id/buscar")
+    @GetMapping("/id")
     @ResponseStatus(HttpStatus.OK)
     public ClienteResponseDto buscarClientePorId(@RequestParam UUID id) {
         return  clienteMapper.toResponse(clienteService.buscarClientePorId(id));

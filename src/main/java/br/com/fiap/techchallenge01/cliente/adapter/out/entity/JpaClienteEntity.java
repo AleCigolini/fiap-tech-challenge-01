@@ -21,7 +21,7 @@ public class JpaClienteEntity extends JpaBaseEntity {
     @Column
     private String nome;
 
-    @Column(unique = true, length = 254)
+    @Column(unique = true)
     private String email;
 
     @Column(unique = true, length = 11)

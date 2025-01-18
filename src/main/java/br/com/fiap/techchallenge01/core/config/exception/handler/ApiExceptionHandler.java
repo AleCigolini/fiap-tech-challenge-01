@@ -33,9 +33,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -115,25 +113,21 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        List<String> fieldErrors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
-                .collect(Collectors.toList());
+        String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
+        List<Problema.ErroAtributo> erroAtributos = ex.getBindingResult().getAllErrors().stream().map(objectError -> {
+            String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
 
-        List<String> globalErrors = ex.getBindingResult()
-                .getGlobalErrors()
-                .stream()
-                .map(objectError -> objectError.getObjectName() + ": " + objectError.getDefaultMessage())
-                .collect(Collectors.toList());
+            String name = objectError.getObjectName();
 
-        List<String> allErrors = new ArrayList<>();
-        allErrors.addAll(fieldErrors);
-        allErrors.addAll(globalErrors);
+            if (objectError instanceof FieldError) {
+                name = ((FieldError) objectError).getField();
+            }
 
-        // Cria o problema com base nos erros encontrados
-        Problema problema = createProblemBuilder(HttpStatus.BAD_REQUEST, ProblemaType.DADOS_INVALIDOS, "Erro na validação")
-                .mensagemUsuario(allErrors.isEmpty() ? "Erro de validação." : String.join(", ", allErrors))
+            return Problema.ErroAtributo.builder().nomeAtributo(name).mensagemErro(message).build();
+        }).collect(Collectors.toList());
+
+        Problema problema = createProblemBuilder(HttpStatus.BAD_REQUEST, ProblemaType.DADOS_INVALIDOS, detail)
+                .mensagemUsuario(detail).listaErroAtributos(erroAtributos)
                 .build();
 
         return handleExceptionInternal(ex, problema, headers, status, request);
@@ -143,14 +137,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @Nullable
     protected ResponseEntity<Object> handleHandlerMethodValidationException(
             HandlerMethodValidationException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        List<String> mensagensErro = new ArrayList<String>();
+        List<String> mensagensErro = new ArrayList<>();
 
         for (ParameterValidationResult result : ex.getAllValidationResults()) {
-            if (result.getResolvableErrors() != null) {
-                for (MessageSourceResolvable error : result.getResolvableErrors()) {
-                    String errorMessage = error.getDefaultMessage();
-                    mensagensErro.add(errorMessage);
-                }
+            for (MessageSourceResolvable error : result.getResolvableErrors()) {
+                String errorMessage = error.getDefaultMessage();
+                mensagensErro.add(errorMessage);
             }
         }
 
