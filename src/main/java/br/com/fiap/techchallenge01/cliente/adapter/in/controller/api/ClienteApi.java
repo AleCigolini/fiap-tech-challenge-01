@@ -5,6 +5,7 @@ import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDt
 import br.com.fiap.techchallenge01.core.utils.validators.cpf.Cpf;
 import br.com.fiap.techchallenge01.core.utils.validators.email.EmailValido;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,7 +34,7 @@ public interface ClienteApi {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    ClienteResponseDto buscarClientePorCpf(@Valid @Cpf String cpf);
+    ClienteResponseDto buscarClientePorCpf(@Parameter(description = "CPF válido do cliente", example = "52932609017", required = true)  @Valid @Cpf String cpf);
 
     /**
      * Busca o cliente a partir de seu e-mail.
@@ -51,7 +52,7 @@ public interface ClienteApi {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    ClienteResponseDto buscarClientePorEmail(@Valid @EmailValido String email);
+    ClienteResponseDto buscarClientePorEmail(@Parameter(description = "E-mail válido do cliente", example = "email@email.com", required = true) @Valid @EmailValido String email);
 
     /**
      * Busca o cliente a partir de seu id.
@@ -66,7 +67,7 @@ public interface ClienteApi {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    ClienteResponseDto buscarClientePorId(UUID id);
+    ClienteResponseDto buscarClientePorId(@Parameter(description = "ID do cliente", example = "123e4567-e89b-12d3-a456-426655440000", required = true) UUID id);
 
     /**
      * Cadastrar um novo cliente.

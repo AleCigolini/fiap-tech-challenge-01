@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge01.produto.adapter.in.controller;
 
-import br.com.fiap.techchallenge01.identificacao.adapter.in.controller.api.CategoriaProdutoApi;
+import br.com.fiap.techchallenge01.produto.adapter.in.controller.api.CategoriaProdutoApi;
 import br.com.fiap.techchallenge01.produto.application.service.CategoriaProdutoService;
 import br.com.fiap.techchallenge01.produto.domain.CategoriaProduto;
 import br.com.fiap.techchallenge01.produto.domain.dto.request.CategoriaProdutoRequestDTO;

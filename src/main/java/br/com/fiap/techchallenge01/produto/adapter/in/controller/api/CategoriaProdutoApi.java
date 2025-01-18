@@ -17,7 +17,7 @@ public interface CategoriaProdutoApi {
     /**
      * Busca a categoria de produto a partir de seu ID.
      *
-     * @param id Long da categoria de produto
+     * @param id String da categoria de produto
      * @return {@link CategoriaProdutoResponseDTO}
      */
     @Operation(summary = "Buscar categoria de produto com Id",
@@ -30,7 +30,7 @@ public interface CategoriaProdutoApi {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    CategoriaProdutoResponseDTO buscarCategoriaProduto(@Parameter(description = "ID da categoria de produto", example = "1", required = true) Long id);
+    CategoriaProdutoResponseDTO buscarCategoriaProduto(@Parameter(description = "ID da categoria de produto", example = "1", required = true) String id);
 
     /**
      * Listar todas as categorias de produto.
@@ -67,7 +67,7 @@ public interface CategoriaProdutoApi {
     /**
      * Alterar o nome de uma categoria de produto.
      *
-     * @param id                         Long da categoria de produto
+     * @param id                         String da categoria de produto
      * @param categoriaProdutoRequestDto Dados da categoria de produto
      * @return {@link CategoriaProdutoResponseDTO}
      */
@@ -85,14 +85,14 @@ public interface CategoriaProdutoApi {
                     )
             })
     CategoriaProdutoResponseDTO alterarNomeCategoriaProduto(
-            @Parameter(description = "ID da categoria de produto", example = "1", required = true) Long id,
+            @Parameter(description = "ID da categoria de produto", example = "1", required = true) String id,
             CategoriaProdutoRequestDTO categoriaProdutoRequestDto);
 
 
     /**
      * Desativar uma categoria de produto.
      *
-     * @param id Long da categoria de produto
+     * @param id String da categoria de produto
      * @return {@link CategoriaProdutoResponseDTO}
      */
     @Operation(summary = "Desativar uma categoria de produto",
@@ -109,6 +109,6 @@ public interface CategoriaProdutoApi {
                     )
             })
     void desativarCategoriaProduto(
-            @Parameter(description = "ID da categoria de produto", example = "1", required = true) Long id);
+            @Parameter(description = "ID da categoria de produto", example = "1", required = true) String id);
 
 }
