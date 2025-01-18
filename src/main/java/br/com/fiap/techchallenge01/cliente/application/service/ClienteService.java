@@ -8,8 +8,10 @@ import br.com.fiap.techchallenge01.cliente.domain.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Function;
 
 @Service
 @AllArgsConstructor
@@ -18,6 +20,7 @@ public class ClienteService implements ClienteUseCase {
 
     @Override
     public Cliente salvarCliente(Cliente cliente) {
+        this.validarClienteExistente(cliente);
         return clienteRepository.salvarCliente(cliente);
     }
 
@@ -55,6 +58,26 @@ public class ClienteService implements ClienteUseCase {
         }
         if (clientes.size() > 1) {
             throw new ClienteValidacaoException(String.format("Encontrado mais de um cliente para o %s: %s", campoBusca, valorBusca));
+        }
+    }
+
+    public void validarClienteExistente(Cliente cliente) {
+        List<String> erros = new ArrayList<>();
+
+        validarDuplicidade(cliente.getCpf(), clienteRepository::buscarClientePorCpf, "Já existe um cliente cadastrado com o CPF informado.", erros);
+        validarDuplicidade(cliente.getEmail(), clienteRepository::buscarClientePorEmail, "Já existe um cliente cadastrado com o e-mail informado.", erros);
+
+        if (!erros.isEmpty()) {
+            throw new ClienteValidacaoException(String.join(", ", erros));
+        }
+    }
+
+    private void validarDuplicidade(String campo, Function<String, List<Cliente>>busca, String mensagemErro, List<String> erros) {
+        if (campo != null) {
+            List<Cliente> clienteEncontrados = busca.apply(campo);
+            if (!clienteEncontrados.isEmpty()) {
+                erros.add(mensagemErro);
+            }
         }
     }
 }
