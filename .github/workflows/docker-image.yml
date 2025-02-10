@@ -1,11 +1,11 @@
-name: Docker Image CI
+name: Docker Hub Publish APP
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  login:
+  publish-docker-hub:
     runs-on: ubuntu-latest
     steps:
       - name: Docker Login
