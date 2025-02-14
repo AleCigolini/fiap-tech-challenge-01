@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.pedido.domain;
+package br.com.fiap.techchallenge01.pagamento.domain;
 
 import lombok.Data;
 

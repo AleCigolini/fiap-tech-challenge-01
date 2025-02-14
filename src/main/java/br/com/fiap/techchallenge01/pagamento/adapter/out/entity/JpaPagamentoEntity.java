@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.pedido.adapter.out.entity;
+package br.com.fiap.techchallenge01.pagamento.adapter.out.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

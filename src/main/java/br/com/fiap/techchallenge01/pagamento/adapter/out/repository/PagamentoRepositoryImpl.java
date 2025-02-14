@@ -1,19 +1,13 @@
-package br.com.fiap.techchallenge01.pedido.adapter.out.repository;
+package br.com.fiap.techchallenge01.pagamento.adapter.out.repository;
 
-import br.com.fiap.techchallenge01.pedido.adapter.out.entity.JpaPagamentoEntity;
-import br.com.fiap.techchallenge01.pedido.adapter.out.entity.JpaPedidoEntity;
-import br.com.fiap.techchallenge01.pedido.adapter.out.entity.JpaProdutoPedidoEntity;
-import br.com.fiap.techchallenge01.pedido.domain.Pagamento;
-import br.com.fiap.techchallenge01.pedido.domain.Pedido;
-import br.com.fiap.techchallenge01.pedido.domain.ProdutoPedido;
-import br.com.fiap.techchallenge01.pedido.domain.repository.PagamentoRepository;
-import br.com.fiap.techchallenge01.pedido.domain.repository.PedidoRepository;
+import br.com.fiap.techchallenge01.pagamento.adapter.out.entity.JpaPagamentoEntity;
+import br.com.fiap.techchallenge01.pagamento.domain.Pagamento;
+import br.com.fiap.techchallenge01.pagamento.domain.repository.PagamentoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Repository
 public class PagamentoRepositoryImpl implements PagamentoRepository {
@@ -31,5 +25,10 @@ public class PagamentoRepositoryImpl implements PagamentoRepository {
         JpaPagamentoEntity jpaPagamentoEntitySalvo = jpaPagamentoRepository.save(jpaPagamentoEntity);
 
         return modelMapper.map(jpaPagamentoEntitySalvo, Pagamento.class);
+    }
+
+    @Override
+    public Optional<Pagamento> buscarPagamentoPorPedidoId(String idPedido) {
+        return jpaPagamentoRepository.findByCodigoPedido(idPedido).map(jpaPagamentoEntity ->  modelMapper.map(jpaPagamentoEntity, Pagamento.class));
     }
 }

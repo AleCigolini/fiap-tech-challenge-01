@@ -10,8 +10,7 @@ public class PedidoNaoEncontradoException extends EntidadeNaoEncontradaException
         super(mensagem);
     }
 
-    public PedidoNaoEncontradoException(Long idPedido) {
-        this(STR."Não existe um pedido com ID: \{idPedido}");
+    public PedidoNaoEncontradoException(Long id) {
+        this(STR."Não existe um pedido com o ID: \{id}");
     }
-
 }

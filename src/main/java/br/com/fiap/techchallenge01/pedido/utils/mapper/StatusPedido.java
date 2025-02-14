@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum StatusPedido {
 
     ABERTO("Aberto"),
-    APROVADO("Aprovado"),
-    EM_ANDAMENTO("Em Andamento"),
-    ENTREGUE("Entregue"),
+    RECEBIDO("Recebido"),
+    EM_ANDAMENTO("Em preparação"),
+    PRONTO("Pronto"),
     FINALIZADO("Finalizado"),
     CANCELADO("Cancelado");
 
