@@ -110,7 +110,7 @@ VALUES
 INSERT INTO pedido
 (id, codigo, status, id_cliente, preco, observacao)
 VALUES
-    ('e389406d-5531-4acf-a354-be5cc46a8cb1', 'XK8JL', 'ABERTO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 100.00, 'Trazer bem embalado'),
+    ('e389406d-5531-4acf-a354-be5cc46a8cb1', 'XK8JL', 'RECEBIDO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 100.00, 'Trazer bem embalado'),
     ('e389406d-5531-4acf-a354-be5cc46a8cb2', 'I7LXA', 'ABERTO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 110.00, 'Estarei na frente da casa'),
     ('e389406d-5531-4acf-a354-be5cc46a8cb3', 'M0I2W', 'CANCELADO', 'e389406d-5531-4acf-a354-be5cc46a8cd4', 120.00, null);
 
@@ -127,3 +127,9 @@ VALUES
     ('e389406d-5531-4acf-a354-be5cc46a8cc7',3, 'Mal passado', 'e389406d-5531-4acf-a354-be5cc46a8cb3', 'e389406d-5531-4acf-a354-be5cc46a8ca1'),
     ('e389406d-5531-4acf-a354-be5cc46a8cc8',1, 'Bem passado', 'e389406d-5531-4acf-a354-be5cc46a8cb3', 'e389406d-5531-4acf-a354-be5cc46a8ca2'),
     ('e389406d-5531-4acf-a354-be5cc46a8cc9',2, 'Bem gelado', 'e389406d-5531-4acf-a354-be5cc46a8cb3', 'e389406d-5531-4acf-a354-be5cc46a8ca3');
+
+-- Inserção de pagamento do pedido na tabela pagamento
+INSERT INTO pagamento
+    (cd_pedido, preco)
+VALUES
+    ('e389406d-5531-4acf-a354-be5cc46a8cb1', 500);
