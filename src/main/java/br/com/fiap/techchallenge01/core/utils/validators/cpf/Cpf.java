@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Cpf {
-    String message() default "É necessário um cpf válido";
+    String message() default "O formato do CPF é inválido";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -8,6 +8,7 @@ import br.com.fiap.techchallenge01.cliente.adapter.in.mapper.ClienteMapper;
 import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
 import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
+import br.com.fiap.techchallenge01.core.utils.domain.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class ClienteController implements ClienteInputPort {
     @GetMapping("/email")
     @ResponseStatus(HttpStatus.OK)
     public ClienteResponseDto buscarClientePorEmail(@RequestParam String email) {
-        return clientePresenter.toResponse(consultarClienteUseCase.buscarClientePorEmail(email));
+        return clientePresenter.toResponse(consultarClienteUseCase.buscarClientePorEmail(new Email(email)));
     }
 
     @Override

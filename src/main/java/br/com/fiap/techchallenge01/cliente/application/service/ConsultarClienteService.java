@@ -6,6 +6,7 @@ import br.com.fiap.techchallenge01.cliente.application.exception.ClienteValidaca
 import br.com.fiap.techchallenge01.cliente.application.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
+import br.com.fiap.techchallenge01.core.utils.domain.Email;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,9 +36,9 @@ public class ConsultarClienteService implements ConsultarClienteUseCase {
     }
 
     @Override
-    public Cliente buscarClientePorEmail(String email) {
+    public Cliente buscarClientePorEmail(Email email) {
         List<Cliente> usuariosEncontradosPorEmail = clienteOutputPort.buscarClientePorEmail(email);
-        validarListaClienteUnicoEncontrado(usuariosEncontradosPorEmail, "email", email);
+        validarListaClienteUnicoEncontrado(usuariosEncontradosPorEmail, "email", email.getEndereco());
         return usuariosEncontradosPorEmail.getFirst();
     }
 

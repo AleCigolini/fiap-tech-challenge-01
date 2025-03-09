@@ -2,12 +2,13 @@ package br.com.fiap.techchallenge01.cliente.domain;
 
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
 import br.com.fiap.techchallenge01.core.utils.domain.DominioBase;
+import br.com.fiap.techchallenge01.core.utils.domain.Email;
 
 public class Cliente extends DominioBase {
 
     private String id;
     private String nome;
-    private String email;
+    private Email email;
     private Cpf cpf;
 
 
@@ -27,11 +28,11 @@ public class Cliente extends DominioBase {
         this.nome = nome;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Email email) {
         this.email = email;
     }
 

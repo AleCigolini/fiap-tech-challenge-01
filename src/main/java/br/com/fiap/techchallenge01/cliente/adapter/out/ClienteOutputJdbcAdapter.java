@@ -6,6 +6,7 @@ import br.com.fiap.techchallenge01.cliente.adapter.out.mapper.JpaClienteMapper;
 import br.com.fiap.techchallenge01.cliente.adapter.out.port.ClienteOutputPort;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
+import br.com.fiap.techchallenge01.core.utils.domain.Email;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -41,8 +42,8 @@ public class ClienteOutputJdbcAdapter implements ClienteOutputPort {
     }
 
     @Override
-    public List<Cliente> buscarClientePorEmail(String email) {
-        return jpaClienteRepository.findByEmail(email)
+    public List<Cliente> buscarClientePorEmail(Email email) {
+        return jpaClienteRepository.findByEmail(email.getEndereco())
                 .stream()
                 .map(jpaClienteEntity -> modelMapper.toCliente(jpaClienteEntity))
                 .collect(Collectors.toList());

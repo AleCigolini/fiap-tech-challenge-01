@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge01.cliente.adapter.out.port;
 
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
+import br.com.fiap.techchallenge01.core.utils.domain.Email;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,5 +12,5 @@ public interface ClienteOutputPort {
     Cliente salvarCliente(Cliente cliente);
     List<Cliente> buscarClientePorCpf(Cpf cpf);
     Optional<Cliente> buscarClientePorId(UUID id);
-    List<Cliente> buscarClientePorEmail(String email);
+    List<Cliente> buscarClientePorEmail(Email email);
 }

@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.core.utils.converter;
+package br.com.fiap.techchallenge01.core.utils.converter.cpf;
 
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
 import org.modelmapper.Converter;

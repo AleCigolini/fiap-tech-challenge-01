@@ -3,7 +3,6 @@ package br.com.fiap.techchallenge01.cliente.adapter.in.port;
 import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
 import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
 import br.com.fiap.techchallenge01.core.utils.validators.cpf.Cpf;
-import br.com.fiap.techchallenge01.core.utils.validators.email.EmailValido;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -52,7 +51,7 @@ public interface ClienteInputPort {
                             content = @Content(schema = @Schema(ref = "Problema"))
                     )
             })
-    ClienteResponseDto buscarClientePorEmail(@Parameter(description = "E-mail válido do cliente", example = "email@email.com", required = true) @Valid @EmailValido String email);
+    ClienteResponseDto buscarClientePorEmail(@Parameter(description = "E-mail válido do cliente", example = "email@email.com", required = true) @Valid String email);
 
     /**
      * Busca o cliente a partir de seu id.

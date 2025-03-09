@@ -3,6 +3,7 @@ package br.com.fiap.techchallenge01.pedido.application.service;
 import br.com.fiap.techchallenge01.cliente.application.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
+import br.com.fiap.techchallenge01.core.utils.domain.Email;
 import br.com.fiap.techchallenge01.pedido.application.usecase.PedidoUseCase;
 import br.com.fiap.techchallenge01.pedido.domain.Pagamento;
 import br.com.fiap.techchallenge01.pedido.domain.Pedido;
@@ -14,7 +15,6 @@ import br.com.fiap.techchallenge01.pedido.utils.mapper.PedidoMapper;
 import br.com.fiap.techchallenge01.pedido.utils.mapper.StatusPedido;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,8 +28,6 @@ public class PedidoService implements PedidoUseCase {
     private PagamentoRepository pagamentoRepository;
     private PedidoMapper pedidoMapper;
     private ConsultarClienteUseCase consultarClienteUseCase;
-    private ModelMapper modelMapper;
-
 
     @Override
     public List<PedidoResponseDTO> buscarPedidos() {
@@ -54,9 +52,9 @@ public class PedidoService implements PedidoUseCase {
 
     private Cliente obterClientePorCpfOuEmail(PedidoRequestDTO pedidoRequestDTO) {
         if (!Strings.isEmpty(pedidoRequestDTO.getCliente().getCpf())) {
-            return consultarClienteUseCase.buscarClientePorCpf(modelMapper.map(pedidoRequestDTO.getCliente().getCpf(), Cpf.class));
+            return consultarClienteUseCase.buscarClientePorCpf(new Cpf(pedidoRequestDTO.getCliente().getCpf()));
         } else {
-            return consultarClienteUseCase.buscarClientePorEmail(pedidoRequestDTO.getCliente().getEmail());
+            return consultarClienteUseCase.buscarClientePorEmail(new Email(pedidoRequestDTO.getCliente().getEmail()));
         }
     }
 
