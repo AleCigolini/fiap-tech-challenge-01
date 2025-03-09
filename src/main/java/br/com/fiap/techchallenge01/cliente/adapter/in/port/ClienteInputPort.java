@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.cliente.adapter.in.controller.api;
+package br.com.fiap.techchallenge01.cliente.adapter.in.port;
 
 import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
 import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.UUID;
 
 @Tag(name = "${tag.swagger.cliente.name}", description = "${tag.swagger.cliente.description}")
-public interface ClienteApi {
+public interface ClienteInputPort {
 
     /**
      * Busca o cliente a partir de seu CPF.

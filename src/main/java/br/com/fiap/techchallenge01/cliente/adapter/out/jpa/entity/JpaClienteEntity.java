@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.cliente.adapter.out.entity;
+package br.com.fiap.techchallenge01.cliente.adapter.out.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

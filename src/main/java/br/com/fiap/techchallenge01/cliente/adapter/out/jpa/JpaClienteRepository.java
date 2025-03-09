@@ -1,7 +1,7 @@
-package br.com.fiap.techchallenge01.cliente.adapter.out.repository;
+package br.com.fiap.techchallenge01.cliente.adapter.out.jpa;
 
 
-import br.com.fiap.techchallenge01.cliente.adapter.out.entity.JpaClienteEntity;
+import br.com.fiap.techchallenge01.cliente.adapter.out.jpa.entity.JpaClienteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

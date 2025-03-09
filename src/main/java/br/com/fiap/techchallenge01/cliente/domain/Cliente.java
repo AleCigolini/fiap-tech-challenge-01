@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge01.cliente.domain;
 
+import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
 import br.com.fiap.techchallenge01.core.utils.domain.DominioBase;
 
 public class Cliente extends DominioBase {
@@ -7,7 +8,7 @@ public class Cliente extends DominioBase {
     private String id;
     private String nome;
     private String email;
-    private String cpf;
+    private Cpf cpf;
 
 
     public String getId() {
@@ -34,11 +35,11 @@ public class Cliente extends DominioBase {
         this.email = email;
     }
 
-    public String getCpf() {
+    public Cpf getCpf() {
         return cpf;
     }
 
-    public void setCpf(String cpf) {
+    public void setCpf(Cpf cpf) {
         this.cpf = cpf;
     }
 }

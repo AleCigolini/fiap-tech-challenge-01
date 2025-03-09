@@ -4,7 +4,7 @@ import br.com.fiap.techchallenge01.cliente.application.exception.ClienteNaoEncon
 import br.com.fiap.techchallenge01.cliente.application.exception.ClienteValidacaoException;
 import br.com.fiap.techchallenge01.cliente.application.usecase.ClienteUseCase;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
-import br.com.fiap.techchallenge01.cliente.domain.repository.ClienteRepository;
+import br.com.fiap.techchallenge01.cliente.adapter.out.port.ClienteOutputPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,24 +16,24 @@ import java.util.function.Function;
 @Service
 @AllArgsConstructor
 public class ClienteService implements ClienteUseCase {
-    private ClienteRepository clienteRepository;
+    private ClienteOutputPort clienteOutputPort;
 
     @Override
     public Cliente salvarCliente(Cliente cliente) {
         this.validarClienteExistente(cliente);
-        return clienteRepository.salvarCliente(cliente);
+        return clienteOutputPort.salvarCliente(cliente);
     }
 
     @Override
     public Cliente buscarClientePorCpf(String cpf) {
-        List<Cliente> usuariosEncontradosPorCpf = clienteRepository.buscarClientePorCpf(cpf);
+        List<Cliente> usuariosEncontradosPorCpf = clienteOutputPort.buscarClientePorCpf(cpf);
         validarListaClienteUnicoEncontrado(usuariosEncontradosPorCpf, "cpf", cpf);
         return usuariosEncontradosPorCpf.getFirst();
     }
 
     @Override
     public Cliente buscarClientePorId(UUID id) {
-        Cliente cliente = clienteRepository.buscarClientePorId(id)
+        Cliente cliente = clienteOutputPort.buscarClientePorId(id)
                 .orElse(null);
         if (cliente == null) {
             this.throwClienteNaoEncontradoException("id", id.toString());
@@ -43,7 +43,7 @@ public class ClienteService implements ClienteUseCase {
 
     @Override
     public Cliente buscarClientePorEmail(String email) {
-        List<Cliente> usuariosEncontradosPorEmail = clienteRepository.buscarClientePorEmail(email);
+        List<Cliente> usuariosEncontradosPorEmail = clienteOutputPort.buscarClientePorEmail(email);
         validarListaClienteUnicoEncontrado(usuariosEncontradosPorEmail, "email", email);
         return usuariosEncontradosPorEmail.getFirst();
     }
@@ -64,8 +64,8 @@ public class ClienteService implements ClienteUseCase {
     public void validarClienteExistente(Cliente cliente) {
         List<String> erros = new ArrayList<>();
 
-        validarDuplicidade(cliente.getCpf(), clienteRepository::buscarClientePorCpf, "Já existe um cliente cadastrado com o CPF informado.", erros);
-        validarDuplicidade(cliente.getEmail(), clienteRepository::buscarClientePorEmail, "Já existe um cliente cadastrado com o e-mail informado.", erros);
+        validarDuplicidade(cliente.getCpf().getValue(), clienteOutputPort::buscarClientePorCpf, "Já existe um cliente cadastrado com o CPF informado.", erros);
+        validarDuplicidade(cliente.getEmail(), clienteOutputPort::buscarClientePorEmail, "Já existe um cliente cadastrado com o e-mail informado.", erros);
 
         if (!erros.isEmpty()) {
             throw new ClienteValidacaoException(String.join(", ", erros));

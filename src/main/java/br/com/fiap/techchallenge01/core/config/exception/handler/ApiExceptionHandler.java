@@ -4,6 +4,7 @@ import br.com.fiap.techchallenge01.core.config.exception.domain.Problema;
 import br.com.fiap.techchallenge01.core.config.exception.domain.ProblemaType;
 import br.com.fiap.techchallenge01.core.config.exception.exceptions.EntidadeNaoEncontradaException;
 import br.com.fiap.techchallenge01.core.config.exception.exceptions.NegocioException;
+import br.com.fiap.techchallenge01.core.config.exception.exceptions.ValidacaoEntidadeException;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
@@ -83,6 +84,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
     }
 
+    @ExceptionHandler(ValidacaoEntidadeException.class)
+    public ResponseEntity<?> handleValidacaoEntidadeException(ValidacaoEntidadeException ex, WebRequest request) {
+
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ProblemaType problemaType = ProblemaType.PARAMETRO_INVALIDO;
+        String detail = ex.getMessage();
+
+        Problema problema = createProblemBuilder(status, problemaType, detail).mensagemUsuario(detail).build();
+
+        return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
+    }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex, WebRequest request) {

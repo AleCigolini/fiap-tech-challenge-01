@@ -1,11 +1,11 @@
 package br.com.fiap.techchallenge01.pedido.adapter.out.entity;
 
-import br.com.fiap.techchallenge01.cliente.adapter.out.entity.JpaClienteEntity;
-import br.com.fiap.techchallenge01.cliente.domain.Cliente;
+import br.com.fiap.techchallenge01.cliente.adapter.out.jpa.entity.JpaClienteEntity;
 import br.com.fiap.techchallenge01.core.utils.entity.JpaBaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -14,10 +14,11 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Table(name = "pedido")
+@EqualsAndHashCode(callSuper = true)
 public class JpaPedidoEntity extends JpaBaseEntity {
 
     @Id
