@@ -1,8 +1,8 @@
-package br.com.fiap.techchallenge01.cliente.adapter.out;
+package br.com.fiap.techchallenge01.cliente.adapter.out.adapter;
 
 import br.com.fiap.techchallenge01.cliente.adapter.out.jpa.JpaClienteRepository;
 import br.com.fiap.techchallenge01.cliente.adapter.out.jpa.entity.JpaClienteEntity;
-import br.com.fiap.techchallenge01.cliente.adapter.out.mapper.JpaClienteMapper;
+import br.com.fiap.techchallenge01.cliente.adapter.out.config.mapper.JpaClienteMapper;
 import br.com.fiap.techchallenge01.cliente.adapter.out.port.ClienteOutputPort;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;

@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge01.cliente.adapter.out.mapper;
+package br.com.fiap.techchallenge01.cliente.adapter.out.config.mapper;
 
 import br.com.fiap.techchallenge01.cliente.adapter.out.jpa.entity.JpaClienteEntity;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;

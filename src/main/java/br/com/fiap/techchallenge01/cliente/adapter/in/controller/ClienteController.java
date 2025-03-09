@@ -1,10 +1,10 @@
 package br.com.fiap.techchallenge01.cliente.adapter.in.controller;
 
 import br.com.fiap.techchallenge01.cliente.adapter.in.port.ClienteInputPort;
-import br.com.fiap.techchallenge01.cliente.adapter.in.presenter.ClientePresenter;
+import br.com.fiap.techchallenge01.cliente.adapter.in.config.presenter.ClientePresenter;
 import br.com.fiap.techchallenge01.cliente.application.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallenge01.cliente.application.usecase.SalvarClienteUseCase;
-import br.com.fiap.techchallenge01.cliente.adapter.in.mapper.ClienteMapper;
+import br.com.fiap.techchallenge01.cliente.adapter.in.config.mapper.ClienteMapper;
 import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
 import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
