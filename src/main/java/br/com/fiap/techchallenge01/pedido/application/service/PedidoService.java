@@ -1,7 +1,8 @@
 package br.com.fiap.techchallenge01.pedido.application.service;
 
-import br.com.fiap.techchallenge01.cliente.application.service.ClienteService;
+import br.com.fiap.techchallenge01.cliente.application.usecase.ClienteUseCase;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
+import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
 import br.com.fiap.techchallenge01.pedido.application.usecase.PedidoUseCase;
 import br.com.fiap.techchallenge01.pedido.domain.Pagamento;
 import br.com.fiap.techchallenge01.pedido.domain.Pedido;
@@ -11,8 +12,9 @@ import br.com.fiap.techchallenge01.pedido.domain.repository.PagamentoRepository;
 import br.com.fiap.techchallenge01.pedido.domain.repository.PedidoRepository;
 import br.com.fiap.techchallenge01.pedido.utils.mapper.PedidoMapper;
 import br.com.fiap.techchallenge01.pedido.utils.mapper.StatusPedido;
+import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,19 +22,14 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class PedidoService implements PedidoUseCase {
-
-    @Autowired
     private PedidoRepository pedidoRepository;
-
-    @Autowired
     private PagamentoRepository pagamentoRepository;
-
-    @Autowired
     private PedidoMapper pedidoMapper;
+    private ClienteUseCase clienteUseCase;
+    private ModelMapper modelMapper;
 
-    @Autowired
-    private ClienteService clienteService;
 
     @Override
     public List<PedidoResponseDTO> buscarPedidos() {
@@ -57,9 +54,9 @@ public class PedidoService implements PedidoUseCase {
 
     private Cliente obterClientePorCpfOuEmail(PedidoRequestDTO pedidoRequestDTO) {
         if (!Strings.isEmpty(pedidoRequestDTO.getCliente().getCpf())) {
-            return clienteService.buscarClientePorCpf(pedidoRequestDTO.getCliente().getCpf());
+            return clienteUseCase.buscarClientePorCpf(modelMapper.map(pedidoRequestDTO.getCliente().getCpf(), Cpf.class));
         } else {
-            return clienteService.buscarClientePorEmail(pedidoRequestDTO.getCliente().getEmail());
+            return clienteUseCase.buscarClientePorEmail(pedidoRequestDTO.getCliente().getEmail());
         }
     }
 

@@ -5,6 +5,7 @@ import br.com.fiap.techchallenge01.cliente.application.exception.ClienteValidaca
 import br.com.fiap.techchallenge01.cliente.application.usecase.ClienteUseCase;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import br.com.fiap.techchallenge01.cliente.adapter.out.port.ClienteOutputPort;
+import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +26,9 @@ public class ClienteService implements ClienteUseCase {
     }
 
     @Override
-    public Cliente buscarClientePorCpf(String cpf) {
+    public Cliente buscarClientePorCpf(Cpf cpf) {
         List<Cliente> usuariosEncontradosPorCpf = clienteOutputPort.buscarClientePorCpf(cpf);
-        validarListaClienteUnicoEncontrado(usuariosEncontradosPorCpf, "cpf", cpf);
+        validarListaClienteUnicoEncontrado(usuariosEncontradosPorCpf, "cpf", cpf.getValue());
         return usuariosEncontradosPorCpf.getFirst();
     }
 
@@ -64,7 +65,7 @@ public class ClienteService implements ClienteUseCase {
     public void validarClienteExistente(Cliente cliente) {
         List<String> erros = new ArrayList<>();
 
-        validarDuplicidade(cliente.getCpf().getValue(), clienteOutputPort::buscarClientePorCpf, "Já existe um cliente cadastrado com o CPF informado.", erros);
+        validarDuplicidade(cliente.getCpf(), clienteOutputPort::buscarClientePorCpf, "Já existe um cliente cadastrado com o CPF informado.", erros);
         validarDuplicidade(cliente.getEmail(), clienteOutputPort::buscarClientePorEmail, "Já existe um cliente cadastrado com o e-mail informado.", erros);
 
         if (!erros.isEmpty()) {
@@ -72,7 +73,7 @@ public class ClienteService implements ClienteUseCase {
         }
     }
 
-    private void validarDuplicidade(String campo, Function<String, List<Cliente>>busca, String mensagemErro, List<String> erros) {
+    private <T> void validarDuplicidade(T campo, Function<T, List<Cliente>>busca, String mensagemErro, List<String> erros) {
         if (campo != null) {
             List<Cliente> clienteEncontrados = busca.apply(campo);
             if (!clienteEncontrados.isEmpty()) {
