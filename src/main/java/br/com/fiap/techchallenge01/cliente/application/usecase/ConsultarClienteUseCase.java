@@ -5,8 +5,7 @@ import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
 
 import java.util.UUID;
 
-public interface ClienteUseCase {
-    Cliente salvarCliente(Cliente cliente);
+public interface ConsultarClienteUseCase {
     Cliente buscarClientePorCpf(Cpf cpf);
     Cliente buscarClientePorId(UUID id);
     Cliente buscarClientePorEmail(String email);

@@ -1,29 +1,21 @@
 package br.com.fiap.techchallenge01.cliente.application.service;
 
+import br.com.fiap.techchallenge01.cliente.adapter.out.port.ClienteOutputPort;
 import br.com.fiap.techchallenge01.cliente.application.exception.ClienteNaoEncontradoException;
 import br.com.fiap.techchallenge01.cliente.application.exception.ClienteValidacaoException;
-import br.com.fiap.techchallenge01.cliente.application.usecase.ClienteUseCase;
+import br.com.fiap.techchallenge01.cliente.application.usecase.ConsultarClienteUseCase;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
-import br.com.fiap.techchallenge01.cliente.adapter.out.port.ClienteOutputPort;
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
 
 @Service
 @AllArgsConstructor
-public class ClienteService implements ClienteUseCase {
+public class ConsultarClienteService implements ConsultarClienteUseCase {
     private ClienteOutputPort clienteOutputPort;
-
-    @Override
-    public Cliente salvarCliente(Cliente cliente) {
-        this.validarClienteExistente(cliente);
-        return clienteOutputPort.salvarCliente(cliente);
-    }
 
     @Override
     public Cliente buscarClientePorCpf(Cpf cpf) {
@@ -49,10 +41,6 @@ public class ClienteService implements ClienteUseCase {
         return usuariosEncontradosPorEmail.getFirst();
     }
 
-    private void throwClienteNaoEncontradoException(String campoBusca, String valorBusca) {
-        throw new ClienteNaoEncontradoException(String.format("Não foi encontrado nenhum cliente para o %s: %s", campoBusca, valorBusca));
-    }
-
     private void validarListaClienteUnicoEncontrado(List<Cliente> clientes, String campoBusca, String valorBusca) {
         if (clientes.isEmpty()) {
             this.throwClienteNaoEncontradoException(campoBusca, valorBusca);
@@ -62,23 +50,7 @@ public class ClienteService implements ClienteUseCase {
         }
     }
 
-    public void validarClienteExistente(Cliente cliente) {
-        List<String> erros = new ArrayList<>();
-
-        validarDuplicidade(cliente.getCpf(), clienteOutputPort::buscarClientePorCpf, "Já existe um cliente cadastrado com o CPF informado.", erros);
-        validarDuplicidade(cliente.getEmail(), clienteOutputPort::buscarClientePorEmail, "Já existe um cliente cadastrado com o e-mail informado.", erros);
-
-        if (!erros.isEmpty()) {
-            throw new ClienteValidacaoException(String.join(", ", erros));
-        }
-    }
-
-    private <T> void validarDuplicidade(T campo, Function<T, List<Cliente>>busca, String mensagemErro, List<String> erros) {
-        if (campo != null) {
-            List<Cliente> clienteEncontrados = busca.apply(campo);
-            if (!clienteEncontrados.isEmpty()) {
-                erros.add(mensagemErro);
-            }
-        }
+    private void throwClienteNaoEncontradoException(String campoBusca, String valorBusca) {
+        throw new ClienteNaoEncontradoException(String.format("Não foi encontrado nenhum cliente para o %s: %s", campoBusca, valorBusca));
     }
 }
