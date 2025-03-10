@@ -1,0 +1,7 @@
+package br.com.fiap.techchallenge01.cliente.application.port;
+
+import br.com.fiap.techchallenge01.cliente.domain.Cliente;
+
+public interface SalvarClienteUseCase {
+    Cliente salvarCliente(Cliente clienteRequestDto);
+}

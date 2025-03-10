@@ -1,7 +1,6 @@
 package br.com.fiap.techchallenge01.pedido.application.service;
 
-import br.com.fiap.techchallenge01.cliente.adapter.in.config.mapper.ClienteMapper;
-import br.com.fiap.techchallenge01.cliente.application.usecase.ConsultarClienteUseCase;
+import br.com.fiap.techchallenge01.cliente.application.port.ConsultarClienteUseCase;
 import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import br.com.fiap.techchallenge01.core.utils.domain.Cpf;
 import br.com.fiap.techchallenge01.core.utils.domain.Email;
@@ -31,7 +30,6 @@ public class PedidoService implements PedidoUseCase {
     private PagamentoRepository pagamentoRepository;
 
     private PedidoMapper pedidoMapper;
-    private ClienteMapper clienteMapper;
 
     @Override
     public List<PedidoResponseDTO> buscarPedidos() {
@@ -56,9 +54,9 @@ public class PedidoService implements PedidoUseCase {
 
     private Cliente obterClientePorCpfOuEmail(PedidoRequestDTO pedidoRequestDTO) {
         if (!Strings.isEmpty(pedidoRequestDTO.getCliente().getCpf())) {
-            return clienteMapper.responseDtoToDomain(consultarClienteUseCase.buscarClientePorCpf(pedidoRequestDTO.getCliente().getCpf()));
+            return consultarClienteUseCase.buscarClientePorCpf(new Cpf(pedidoRequestDTO.getCliente().getCpf()));
         } else {
-            return clienteMapper.responseDtoToDomain(consultarClienteUseCase.buscarClientePorEmail(pedidoRequestDTO.getCliente().getEmail()));
+            return consultarClienteUseCase.buscarClientePorEmail(new Email(pedidoRequestDTO.getCliente().getEmail()));
         }
     }
 

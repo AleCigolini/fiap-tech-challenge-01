@@ -1,13 +1,9 @@
 package br.com.fiap.techchallenge01.cliente.application.service;
 
-import br.com.fiap.techchallenge01.cliente.adapter.in.config.mapper.ClienteMapper;
-import br.com.fiap.techchallenge01.cliente.adapter.in.config.presenter.ClientePresenter;
-import br.com.fiap.techchallenge01.cliente.application.exception.ClienteValidacaoException;
-import br.com.fiap.techchallenge01.cliente.application.usecase.SalvarClienteUseCase;
-import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import br.com.fiap.techchallenge01.cliente.adapter.out.port.ClienteOutputPort;
-import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
-import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
+import br.com.fiap.techchallenge01.cliente.application.exception.ClienteValidacaoException;
+import br.com.fiap.techchallenge01.cliente.application.port.SalvarClienteUseCase;
+import br.com.fiap.techchallenge01.cliente.domain.Cliente;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +15,11 @@ import java.util.function.Function;
 @AllArgsConstructor
 public class SalvarSalvarClienteService implements SalvarClienteUseCase {
     private ClienteOutputPort clienteOutputPort;
-    private ClienteMapper clienteMapper;
-    private ClientePresenter clientePresenter;
 
     @Override
-    public ClienteResponseDto salvarCliente(ClienteRequestDto clienteRequestDto) {
-        final Cliente cliente = clienteMapper.requestDtoToDomain(clienteRequestDto);
+    public Cliente salvarCliente(Cliente cliente) {
         this.validarClienteExistente(cliente);
-        return clientePresenter.toResponse(clienteOutputPort.salvarCliente(cliente));
+        return clienteOutputPort.salvarCliente(cliente);
     }
 
     public void validarClienteExistente(Cliente cliente) {
