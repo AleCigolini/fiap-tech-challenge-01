@@ -1,7 +1,8 @@
 package br.com.fiap.techchallenge01.cliente.application.usecase;
 
-import br.com.fiap.techchallenge01.cliente.domain.Cliente;
+import br.com.fiap.techchallenge01.cliente.domain.dto.request.ClienteRequestDto;
+import br.com.fiap.techchallenge01.cliente.domain.dto.response.ClienteResponseDto;
 
 public interface SalvarClienteUseCase {
-    Cliente salvarCliente(Cliente cliente);
+    ClienteResponseDto salvarCliente(ClienteRequestDto clienteRequestDto);
 }
